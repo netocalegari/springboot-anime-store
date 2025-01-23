@@ -1,0 +1,14 @@
+services:
+  db:
+    image: mysql
+    container_name: anime_store
+    command: ["mysqld", "--pid-file=/tmp/mysqld.pid"]
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - devdojo_data:/var/lib/mysql
+
+volumes:
+  devdojo_data:
