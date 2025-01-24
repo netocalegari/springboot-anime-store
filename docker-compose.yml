@@ -1,14 +1,16 @@
 services:
   db:
-    image: mysql
+    image: postgres:16
     container_name: anime_store
-    command: ["mysqld", "--pid-file=/tmp/mysqld.pid"]
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: anime_store
     ports:
-      - "3306:3306"
+      - "5432:5432"
     volumes:
-      - devdojo_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - devdojo_data:/var/lib/postgresql/data
 
 volumes:
   devdojo_data:

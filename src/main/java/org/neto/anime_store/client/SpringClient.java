@@ -3,6 +3,7 @@ package org.neto.anime_store.client;
 import lombok.extern.log4j.Log4j2;
 import org.neto.anime_store.domain.Anime;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
@@ -23,11 +24,24 @@ public class SpringClient {
         log.info(object);
 
         ResponseEntity<List<Anime>> animesList = new RestTemplate().exchange(
-                "http://localhost:8080/animes/all",
-                HttpMethod.GET,
-                null, new ParameterizedTypeReference<>() {
+                "http://localhost:8080/animes/all", HttpMethod.GET, null, new ParameterizedTypeReference<>() {
                 }
         );
         log.info(animesList.getBody());
+
+//        Anime kingdom = Anime.builder().name("Kingdom").build();
+//        Anime kingdomSaved = new RestTemplate().postForObject("http://localhost:8080/animes", kingdom, Anime.class);
+//        log.info(kingdomSaved);
+
+        Anime samurai = Anime.builder().name("Samurai X").build();
+        ResponseEntity<Anime> samuraiSaved = new RestTemplate().exchange(
+                "http://localhost:8080/animes",
+                HttpMethod.POST,
+                new HttpEntity<>(samurai),
+                new ParameterizedTypeReference<>() {
+                }
+        );
+        log.info(samuraiSaved);
+
     }
 }
