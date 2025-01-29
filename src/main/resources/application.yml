@@ -4,11 +4,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/anime_store
+    url: jdbc:postgresql://dpg-cu9ocs5umphs73cesp00-a.ohio-postgres.render.com:5432/db_anime_store
     username: root
-    password: root
-    driver-class-name: org.postgresql.Driver
-
+    password: 2jaJCdLEs2binQtSGLdOsP6Bku3eI4TC
   jpa:
     hibernate:
       ddl-auto: update
