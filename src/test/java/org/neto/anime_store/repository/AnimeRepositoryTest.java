@@ -6,6 +6,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.neto.anime_store.domain.Anime;
+import org.neto.anime_store.util.AnimeCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
@@ -22,7 +23,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Save persistis anime when successful")
     void save_PersistAnime_WhenSuccesfull() {
-        Anime animeToSave = createAnime();
+        Anime animeToSave = AnimeCreator.createAnimeToBeSaved();
         Anime savedAnime = this.animeRepository.save(animeToSave);
 
         Assertions.assertThat(savedAnime).isNotNull();
@@ -33,7 +34,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Save updates anime when successful")
     void save_UpdatesAnime_WhenSuccesfull() {
-        Anime animeToSave = createAnime();
+        Anime animeToSave = AnimeCreator.createAnimeToBeSaved();
         Anime savedAnime = this.animeRepository.save(animeToSave);
         savedAnime.setName("Overlord");
 
@@ -61,7 +62,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Delete removes anime when successful")
     void delete_RemovesAnime_WhenSuccesfull() {
-        Anime animeToSave = createAnime();
+        Anime animeToSave = AnimeCreator.createAnimeToBeSaved();
         Anime savedAnime = this.animeRepository.save(animeToSave);
 
         this.animeRepository.delete(savedAnime);
@@ -73,7 +74,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Find by name returns list of anime when successful")
     void finByName_ReturnListOfAnime_WhenSuccesfull() {
-        Anime animeToSave = createAnime();
+        Anime animeToSave = AnimeCreator.createAnimeToBeSaved();
         Anime savedAnime = this.animeRepository.save(animeToSave);
         String name = savedAnime.getName();
 
@@ -91,7 +92,5 @@ class AnimeRepositoryTest {
     }
 
 
-    private Anime createAnime() {
-        return Anime.builder().name("Hajime no Ippo").build();
-    }
+
 }
