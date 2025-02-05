@@ -34,8 +34,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth
-                .anyRequest().authenticated())
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/animes/admin/**")
+                        .hasRole("ADMIN")
+                        .requestMatchers("/animes/**")
+                        .hasRole("USER")
+                        .anyRequest()
+                        .authenticated())
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults());
 
@@ -51,7 +55,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws
+                                                                                                                Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
@@ -62,7 +67,8 @@ public class SecurityConfig {
 //
 //        UserDetails user = User.withUsername("neto2").password(encoder.encode("123456")).roles("USER").build();
 //
-//        UserDetails admin = User.withUsername("admin2").password(encoder.encode("admin")).roles("USER", "ADMIN").build();
+//        UserDetails admin = User.withUsername("admin2").password(encoder.encode("admin")).roles("USER", "ADMIN")
+//        .build();
 //
 //        return new InMemoryUserDetailsManager(user, admin);
 //    }
