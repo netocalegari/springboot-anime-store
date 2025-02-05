@@ -11,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +44,6 @@ public class AnimeController {
             @PathVariable Long id,
             @AuthenticationPrincipal UserDetails userDetails
     ) {
-        System.out.println(userDetails);
         return ResponseEntity.ok(animeService.findByIdOrThrowBadRequestException(id));
     }
 
@@ -60,14 +58,13 @@ public class AnimeController {
     }
 
     @DeleteMapping(path = "/admin/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         animeService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> replace(@RequestBody AnimePutRequestBody animePutRequestBody) {
         animeService.replace(animePutRequestBody);
         return ResponseEntity.noContent().build();
