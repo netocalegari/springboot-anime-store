@@ -10,4 +10,9 @@ management:
   endpoints:
     web:
       exposure:
-        include: health, metrics, env
+        include: health, info, metrics, prometheus
+
+  prometheus:
+    metrics:
+      export:
+        enabled: true

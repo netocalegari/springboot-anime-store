@@ -74,10 +74,12 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
             HttpStatusCode statusCode,
             WebRequest request
     ) {
+        String causeMessage = (ex.getCause() != null) ? ex.getCause().getMessage() : ex.getMessage();
+
         ExceptionDetails exceptionDetails = ExceptionDetails.builder()
                 .timestamp(LocalDateTime.now())
                 .status(statusCode.value())
-                .title(ex.getCause().getMessage())
+                .title(causeMessage)
                 .details(ex.getMessage())
                 .developerMessage(ex.getClass().getName())
                 .build();
