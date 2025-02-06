@@ -3,6 +3,8 @@ server:
     include-stacktrace: on_param
 
 spring:
+  application:
+    name: anime-store-springboot
   profiles:
     active: ${APP_PROFILE:dev}
 
