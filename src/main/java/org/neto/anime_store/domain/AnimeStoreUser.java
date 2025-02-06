@@ -1,5 +1,6 @@
 package org.neto.anime_store.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,6 +29,8 @@ public class AnimeStoreUser implements UserDetails {
     @NotEmpty(message = "The user's name cannot be empty")
     private String name;
     private String username;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String authorities; // ROLE_ADMIN, ROLE_USER
 
