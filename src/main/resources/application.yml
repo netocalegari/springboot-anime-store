@@ -3,6 +3,8 @@ server:
     include-stacktrace: on_param
 
 spring:
+  application:
+    name: anime-store-springboot
   profiles:
     active: ${APP_PROFILE:dev}
 
@@ -10,4 +12,9 @@ management:
   endpoints:
     web:
       exposure:
-        include: health, metrics, env
+        include: health, info, metrics, prometheus
+
+  prometheus:
+    metrics:
+      export:
+        enabled: true
