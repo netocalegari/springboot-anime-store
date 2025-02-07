@@ -26,26 +26,28 @@ If you wish to run the database via **Docker**, use the command:
 docker run --name anime-store-db -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -e POSTGRES_DB=anime_store -p 5432:5432 -d postgres
 ```
 
-Caso prefira configurar manualmente, ajuste as credenciais no arquivo `application.properties` ou `application.yml`:
+In case you prefer to configure manually, adjust the credentials on the `application-dev.yml`:
 ```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/anime_store
-spring.datasource.username=admin
-spring.datasource.password=admin
+spring:
+    datasource:
+    url: jdbc:postgresql://localhost:5432/anime_store
+    username: root
+    password: root
 ```
 
 ### ▶️ Executando o Projeto
-1. Clone o repositório:
+1. Clone the repo:
    ```bash
-   git clone https://github.com/seu-usuario/anime-store-api.git
-   cd anime-store-api
+   git clone https://github.com/your-username/springboot-anime-store.git
+   cd springboot-anime-store.git
    ```
-2. Compile e execute o projeto com:
+2. Compile and run project with:
    ```bash
    mvn spring-boot:run
    ```
-3. A API estará disponível em: `http://localhost:8080`
+3. API will be available in: `http://localhost:8081`
 
-## 🔑 Autenticação e Segurança
+## 🔑 Authentication and Security
 A API utiliza **Spring Security** para autenticação baseada em **JWT**. Para acessar os endpoints protegidos:
 1. Faça login no endpoint `/auth/login` informando `username` e `password`.
 2. No retorno, copie o token JWT e use-o no **Authorization Header** das requisições.
