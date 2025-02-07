@@ -5,29 +5,17 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.neto.anime_store.domain.Anime;
 import org.neto.anime_store.domain.AnimeStoreUser;
 import org.neto.anime_store.dtos.AnimeStoreUserDto;
-import org.neto.anime_store.mapper.AnimeStoreUserMapper;
-import org.neto.anime_store.requests.AnimePostRequestBody;
-import org.neto.anime_store.requests.AnimePutRequestBody;
+import org.neto.anime_store.requests.AnimeStoreUserPutRequestBody;
 import org.neto.anime_store.requests.AnimeStoreUserSaveRequestBody;
-import org.neto.anime_store.service.AnimeService;
-import org.neto.anime_store.service.AnimeStoreUserDetailsService;
-import org.neto.anime_store.utils.DateUtil;
-import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.neto.anime_store.service.AnimeStoreUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,7 +24,7 @@ import java.util.List;
 @RequestMapping("users")
 @RequiredArgsConstructor
 public class animeStoreUserController {
-    private final AnimeStoreUserDetailsService animeStoreUserDetailsService;
+    private final AnimeStoreUserService animeStoreUserService;
 
     @PostMapping
     @Operation(
@@ -47,7 +35,7 @@ public class animeStoreUserController {
         animeStoreUserSaveRequestBody.setPassword(encoder.encode(animeStoreUserSaveRequestBody.getPassword()));
 
         return new ResponseEntity<>(
-                animeStoreUserDetailsService.save(animeStoreUserSaveRequestBody),
+                animeStoreUserService.save(animeStoreUserSaveRequestBody),
                                     HttpStatus.CREATED
         );
     }
@@ -69,11 +57,7 @@ public class animeStoreUserController {
                              {
                                  "authority": "ROLE_USER"
                              }
-                         ],
-                         "enabled": true,
-                         "credentialsNonExpired": true,
-                         "accountNonExpired": true,
-                         "accountNonLocked": true
+                         ]
                      },
                      {
                          "id": 2,
@@ -86,11 +70,7 @@ public class animeStoreUserController {
                              {
                                  "authority": "ROLE_ADMIN"
                              }
-                         ],
-                         "enabled": true,
-                         "credentialsNonExpired": true,
-                         "accountNonExpired": true,
-                         "accountNonLocked": true
+                         ]
                      }
                  ]
             
@@ -98,13 +78,37 @@ public class animeStoreUserController {
     )
     )
     )
-    public ResponseEntity<List<AnimeStoreUser>> listAll() {
-        return ResponseEntity.ok(animeStoreUserDetailsService.list());
+    public ResponseEntity<List<AnimeStoreUserDto>> listAll() {
+        return ResponseEntity.ok(animeStoreUserService.list());
     }
 
     @GetMapping(path = "/find")
     public ResponseEntity<AnimeStoreUserDto> findByUsername(@RequestParam String username) {
-        return ResponseEntity.ok(animeStoreUserDetailsService.findByUsername(username));
+        return ResponseEntity.ok(animeStoreUserService.findByUsername(username));
+    }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<AnimeStoreUserDto> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(animeStoreUserService.findById(id));
+    }
+
+    @PutMapping(path = "/admin")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "204", description = "Successful operation"),
+                    @ApiResponse(responseCode = "400", description = "When User doesn't exist in the database"),
+            }
+    )
+    @Transactional
+    public ResponseEntity<Void> replace(@RequestBody AnimeStoreUserPutRequestBody animeStoreUserPutRequestBody) {
+        animeStoreUserService.replace(animeStoreUserPutRequestBody);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping(path = "/admin/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        animeStoreUserService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
     public PasswordEncoder passwordEncoder() {

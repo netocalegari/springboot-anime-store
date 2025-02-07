@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 @Data
 @AllArgsConstructor
@@ -30,13 +31,18 @@ public class AnimeStoreUser implements UserDetails {
     private String name;
     private String username;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String authorities; // ROLE_ADMIN, ROLE_USER
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.stream(authorities.split(",")).map(SimpleGrantedAuthority::new).toList();
+        if (authorities == null || authorities.trim().isEmpty()) {
+            return Collections.emptyList(); // Retorna uma lista vazia se authorities for null ou vazio
+        }
+        return Arrays.stream(authorities.split(","))
+                .map(SimpleGrantedAuthority::new)
+                .toList();
     }
 
     @Override

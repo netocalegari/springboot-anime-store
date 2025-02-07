@@ -5,6 +5,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Data;
+import org.neto.anime_store.dtos.AuthorityDto;
+
+import java.util.List;
 
 @Data
 @Builder
@@ -25,7 +28,7 @@ public class AnimeStoreUserSaveRequestBody {
     @Schema(
             description = "This is the User's authorities", example = "ROLE_ADMIN, ROLE_USER"
     )
-    private String authorities;
+    private List<AuthorityDto> authorities;
 
     @NotEmpty(message = "The password cannot be empty")
     @Schema(
