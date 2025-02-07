@@ -83,11 +83,17 @@ public class animeStoreUserController {
     }
 
     @GetMapping(path = "/find")
+    @Operation(
+            summary = "Finds user by username", tags = {"users"}
+    )
     public ResponseEntity<AnimeStoreUserDto> findByUsername(@RequestParam String username) {
         return ResponseEntity.ok(animeStoreUserService.findByUsername(username));
     }
 
     @GetMapping(path = "/{id}")
+    @Operation(
+            summary = "Finds user by id", tags = {"users"}
+    )
     public ResponseEntity<AnimeStoreUserDto> findById(@PathVariable Long id) {
         return ResponseEntity.ok(animeStoreUserService.findById(id));
     }
@@ -99,6 +105,9 @@ public class animeStoreUserController {
                     @ApiResponse(responseCode = "400", description = "When User doesn't exist in the database"),
             }
     )
+    @Operation(
+            summary = "Updates user information", tags = {"users"}
+    )
     @Transactional
     public ResponseEntity<Void> replace(@RequestBody AnimeStoreUserPutRequestBody animeStoreUserPutRequestBody) {
         animeStoreUserService.replace(animeStoreUserPutRequestBody);
@@ -106,6 +115,15 @@ public class animeStoreUserController {
     }
 
     @DeleteMapping(path = "/admin/{id}")
+    @Operation(
+            summary = "Deletes user", tags = {"users"}
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "204", description = "Successful operation"),
+                    @ApiResponse(responseCode = "400", description = "When User doesn't exist in the database"),
+            }
+    )
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         animeStoreUserService.delete(id);
         return ResponseEntity.noContent().build();

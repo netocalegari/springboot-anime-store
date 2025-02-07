@@ -33,7 +33,7 @@ public class AnimeStoreUserSaveRequestBody {
     @NotEmpty(message = "The password cannot be empty")
     @Schema(
             description = "This is the User's password hash",
-            example = "$2a$10$5z5iZto9CFpI/rIB1qL8MuNv46tir1HABUNoZ91tUUrQcmBPzdWN5C"
+            example = "159753"
     )
     private String password;
 }
