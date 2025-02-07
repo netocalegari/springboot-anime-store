@@ -97,6 +97,9 @@ public class AnimeController {
     }
 
     @PostMapping
+    @Operation(
+            summary = "Saves anime on database", description = "Saves anime on database", tags = {"anime"}
+    )
     public ResponseEntity<Anime> save(@RequestBody @Valid AnimePostRequestBody animePostRequestBody) {
         return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
     }
@@ -107,6 +110,9 @@ public class AnimeController {
                     @ApiResponse(responseCode = "204", description = "Successful operation"),
                     @ApiResponse(responseCode = "400", description = "When Anime doesn't exist in the database"),
             }
+    )
+    @Operation(
+            summary = "Deletes anime from database", description = "Deletes anime from database", tags = {"anime"}
     )
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         animeService.delete(id);
@@ -119,6 +125,9 @@ public class AnimeController {
                     @ApiResponse(responseCode = "204", description = "Successful operation"),
                     @ApiResponse(responseCode = "400", description = "When Anime doesn't exist in the database"),
             }
+    )
+    @Operation(
+            summary = "Updates found anime", description = "Updates found anime", tags = {"anime"}
     )
     public ResponseEntity<Void> replace(@RequestBody AnimePutRequestBody animePutRequestBody) {
         animeService.replace(animePutRequestBody);

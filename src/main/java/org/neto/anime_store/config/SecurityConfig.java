@@ -34,11 +34,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/animes/admin/**")
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/animes/admin/**", "/users/admin/**")
                         .hasRole("ADMIN")
                         .requestMatchers("/animes/**")
                         .hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/actuator/**")
+                        .requestMatchers(
+                                "/actuator/**",
+                                "/users/**",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html"
+                        )
                         .permitAll()
                         .anyRequest()
                         .authenticated())

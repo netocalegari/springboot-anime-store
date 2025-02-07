@@ -1,10 +1,7 @@
 package org.neto.anime_store.handler;
 
 import lombok.extern.log4j.Log4j2;
-import org.neto.anime_store.exceptions.BadRequestException;
-import org.neto.anime_store.exceptions.BadRequestExceptionDetails;
-import org.neto.anime_store.exceptions.ExceptionDetails;
-import org.neto.anime_store.exceptions.ValidationExceptionDetails;
+import org.neto.anime_store.exceptions.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -33,6 +30,22 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                         .title("Bad Request Exception, check the documentation.")
                         .details(bre.getMessage())
                         .developerMessage(bre.getClass().getName())
+                        .build(), HttpStatus.BAD_REQUEST
+        );
+
+    }
+
+    @ExceptionHandler(UsernameAlreadyRegisteredException.class)
+    protected ResponseEntity<UsernameAlreadyRegisteredExceptionDetails> handleUsernameAlreadyRegisteredException(
+            UsernameAlreadyRegisteredException ex
+    ) {
+        return new ResponseEntity<>(
+                UsernameAlreadyRegisteredExceptionDetails.builder()
+                        .timestamp(LocalDateTime.now())
+                        .status(HttpStatus.BAD_REQUEST.value())
+                        .title("Username already registered.")
+                        .details(ex.getMessage())
+                        .developerMessage(ex.getClass().getName())
                         .build(), HttpStatus.BAD_REQUEST
         );
 
