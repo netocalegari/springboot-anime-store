@@ -53,7 +53,7 @@ public class AnimeStoreUserService {
         AnimeStoreUser user = animeStoreUserRepository.findByUsername(username);
 
         if (user == null) {
-            throw new NotFoundException("User not found");
+            return null;
         }
 
         return AnimeStoreUserDto.builder()

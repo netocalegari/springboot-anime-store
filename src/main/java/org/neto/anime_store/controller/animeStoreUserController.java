@@ -8,6 +8,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.neto.anime_store.domain.AnimeStoreUser;
 import org.neto.anime_store.dtos.AnimeStoreUserDto;
+import org.neto.anime_store.exceptions.NotFoundException;
+import org.neto.anime_store.exceptions.UsernameAlreadyRegisteredException;
 import org.neto.anime_store.requests.AnimeStoreUserPutRequestBody;
 import org.neto.anime_store.requests.AnimeStoreUserSaveRequestBody;
 import org.neto.anime_store.service.AnimeStoreUserService;
@@ -31,13 +33,17 @@ public class animeStoreUserController {
             summary = "Creates an user", tags = {"users"}
     )
     public ResponseEntity<AnimeStoreUser> save(@RequestBody AnimeStoreUserSaveRequestBody animeStoreUserSaveRequestBody) {
+        ResponseEntity<AnimeStoreUserDto> existingUser = findByUsername(animeStoreUserSaveRequestBody.getUsername());
+
+
+        if (existingUser.getStatusCode().equals(HttpStatus.OK)) {
+            throw new UsernameAlreadyRegisteredException("Username already in use");
+        }
+
         PasswordEncoder encoder = passwordEncoder();
         animeStoreUserSaveRequestBody.setPassword(encoder.encode(animeStoreUserSaveRequestBody.getPassword()));
 
-        return new ResponseEntity<>(
-                animeStoreUserService.save(animeStoreUserSaveRequestBody),
-                                    HttpStatus.CREATED
-        );
+        return new ResponseEntity<>(animeStoreUserService.save(animeStoreUserSaveRequestBody), HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -87,6 +93,12 @@ public class animeStoreUserController {
             summary = "Finds user by username", tags = {"users"}
     )
     public ResponseEntity<AnimeStoreUserDto> findByUsername(@RequestParam String username) {
+        AnimeStoreUserDto user = animeStoreUserService.findByUsername(username);
+
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.ok(animeStoreUserService.findByUsername(username));
     }
 
