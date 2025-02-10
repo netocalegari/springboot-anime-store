@@ -1,8 +1,8 @@
 # Anime Store API
 
-This project is an API for User and Animes management. It provides endpoints to create, read, update and delete users and animes. 
+This project is an API for User and Anime management. It provides endpoints to create, read, update, and delete users and anime.
 
-## 🚀 Used tecnologies
+## 🚀 Used Technologies
 - **Java 21**
 - **Spring Boot 3**
 - **Spring Security**
@@ -12,21 +12,21 @@ This project is an API for User and Animes management. It provides endpoints to 
 - **PostgreSQL**
 - **Swagger**
 
-## 📌 How to run locally
+## 📌 How to Run Locally
 
-### 🛠️ Pre-requisites
+### 🛠️ Prerequisites
 Before starting, make sure you have installed:
-- **Java 17**
+- **Java 21**
 - **Maven**
-- **Docker** (optional,so you can run PostgreSQL)
+- **Docker** (optional, so you can run PostgreSQL)
 
-### ⚙️ Configuração do Banco de Dados
+### ⚙️ Database Configuration
 If you wish to run the database via **Docker**, use the command:
 ```bash
 docker run --name anime-store-db -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -e POSTGRES_DB=anime_store -p 5432:5432 -d postgres
 ```
 
-In case you prefer to configure manually, adjust the credentials on the `application-dev.yml`:
+If you prefer to configure it manually, adjust the credentials in `application-dev.yml`:
 ```properties
 spring:
     datasource:
@@ -35,49 +35,37 @@ spring:
     password: root
 ```
 
-### ▶️ Executando o Projeto
+### ▶️ Running the Project
 1. Clone the repo:
    ```bash
    git clone https://github.com/your-username/springboot-anime-store.git
    cd springboot-anime-store.git
    ```
-2. Compile and run project with:
+2. Compile and run the project with:
    ```bash
    mvn spring-boot:run
    ```
-3. API will be available in: `http://localhost:8081`
+3. The API will be available at: `http://localhost:8081`
 
 ## 🔑 Authentication and Security
-A API utiliza **Spring Security** para autenticação baseada em **JWT**. Para acessar os endpoints protegidos:
-1. Faça login no endpoint `/auth/login` informando `username` e `password`.
-2. No retorno, copie o token JWT e use-o no **Authorization Header** das requisições.
-   ```bash
-   Authorization: Bearer <seu-token-jwt>
-   ```
+The API uses **Spring Security** for **Basic Authentication**. To access protected endpoints:
+1. Create your user through the `/users` endpoint by providing `name`, `username`, `authorities`, and `password`.
+2. Use the `username` and `password` in the Basic Authentication header.
 
-## 📖 Documentação da API
-A documentação interativa do Swagger está disponível em:
-🔗 **[Swagger UI](http://localhost:8080/swagger-ui.html)**
+## 📚 API Documentation
+The interactive Swagger documentation is available at:
+🔗 **[Swagger UI](http://localhost:8081/swagger-ui/index.html)**
 
-## 📌 Principais Endpoints
-A lista completa de endpoints está disponível no Swagger, mas aqui estão alguns principais:
-- `POST /auth/login` → Autentica um usuário e retorna um token JWT.
-- `POST /users` → Cria um novo usuário.
-- `GET /users/{id}` → Busca um usuário pelo ID.
-- `PUT /users/{id}` → Atualiza um usuário existente.
-- `DELETE /users/{id}` → Remove um usuário.
+## 📌 Main Endpoints
+The complete list of endpoints is available in Swagger, but here are some key ones:
+- `POST /users` → Creates a new user.
+- `GET /users/{id}` → Retrieves a user by ID.
+- `PUT /users/{id}` → Updates an existing user.
+- `DELETE /users/{id}` → Deletes a user.
 
-Para mais detalhes, acesse a documentação completa no **Swagger**.
-
-## 🛠️ Contribuição
-Fique à vontade para contribuir! Para isso:
-1. Faça um **fork** do repositório.
-2. Crie uma nova **branch**: `git checkout -b minha-feature`.
-3. Faça suas alterações e **commite**: `git commit -m 'Minha nova feature'`.
-4. Envie suas alterações: `git push origin minha-feature`.
-5. Abra um **Pull Request**.
+For more details, check the full documentation in **Swagger**.
 
 ---
 
-📌 **Anime Store API** - Um projeto para estudo e prática de desenvolvimento backend em Java e Spring Boot. 😊
+📌 **Anime Store API** - A project for practicing backend development with Java and Spring Boot.
 
