@@ -24,10 +24,10 @@ jobs:
           java-version: '21'
 
       - name: Install dependencies
-        run: mvnw install -DskipTests
+        run: mvn install -DskipTests
 
       - name: Run tests
-        run: mvnw test
+        run: mvn test
 
   deploy:
     name: Deploy to Render
