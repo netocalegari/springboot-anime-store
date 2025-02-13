@@ -93,7 +93,6 @@ public class AnimeController {
     )
     )
     public ResponseEntity<List<Anime>> findByName(@RequestParam String name) {
-        System.out.println("name");
         return ResponseEntity.ok(animeService.findByName(name));
     }
 
