@@ -54,7 +54,7 @@ The API uses **Spring Security** for **Basic Authentication**. To access protect
 
 ## 📚 API Documentation
 The interactive Swagger documentation is available at:
-🔗 **[Swagger UI](http://localhost:8081/swagger-ui/index.html)**
+🔗 **[Swagger UI](https://anime-store-api.onrender.com/swagger-ui/index.html)**
 
 ## 📌 Main Endpoints
 The complete list of endpoints is available in Swagger, but here are some key ones:
@@ -66,6 +66,12 @@ The complete list of endpoints is available in Swagger, but here are some key on
 For more details, check the full documentation in **Swagger**.
 
 ---
+## ⚠️ Important Notice about Render Free Tier:
+
+- The API is hosted on Render's free tier, which means it becomes inactive after periods of inactivity
+- Initial requests after inactivity may take over 1 minute to respond
+- The PostgreSQL database on Render is automatically deleted after 90 days
+- For consistent and faster access, consider running the API locally  
 
 📌 **Anime Store API** - A project for practicing backend development with Java and Spring Boot.
 
