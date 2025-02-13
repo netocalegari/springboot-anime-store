@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.neto.anime_store.domain.AnimeStoreUser;
 import org.neto.anime_store.dtos.AnimeStoreUserDto;
-import org.neto.anime_store.exceptions.NotFoundException;
 import org.neto.anime_store.exceptions.UsernameAlreadyRegisteredException;
 import org.neto.anime_store.requests.AnimeStoreUserPutRequestBody;
 import org.neto.anime_store.requests.AnimeStoreUserSaveRequestBody;
@@ -25,7 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("users")
 @RequiredArgsConstructor
-public class animeStoreUserController {
+public class AnimeStoreUserController {
     private final AnimeStoreUserService animeStoreUserService;
 
     @PostMapping
